@@ -1,7 +1,7 @@
 import React from 'react'
 import { SentimentCards } from './sentimentCards'
 import SentimentChart from './sentimentChart'
-import { Heatmap } from './heatmap'
+import { SimpleTreemap } from './heatmap'
 import { FiActivity } from 'react-icons/fi'
 
 export const Grid = () => {
@@ -12,8 +12,8 @@ export const Grid = () => {
           <SentimentChart />
           
         </div>
-        <div className="col-span-4 grid h-135 shadow rounded-xl px-5 py-4 border border-stone-300">
-          <Heatmap />
+        <div className="col-span-4 grid mt-16.5 h-100 shadow rounded-xl px-5 py-4 border border-stone-300">
+          <SimpleTreemap />
         </div>
         <div className="col-span-12 grid h-[50vh] shadow rounded-xl px-5 py-4 border border-stone-300">
         </div>
