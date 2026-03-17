@@ -22,3 +22,14 @@ export async function getRisk() {
 
   return res.json()
 }
+
+export async function getNews() {
+
+  const res = await fetch("http://127.0.0.1:8000/news-filtered", { cache: "no-store" })
+
+  if (!res.ok) {
+    throw new Error("API failed")
+  }
+
+  return res.json()
+}
