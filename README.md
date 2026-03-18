@@ -92,3 +92,30 @@ Note that these classifications are within large distinct listof Str. I have a l
 
 ### Sentiment.py
 This file is by far the most important and complex part of the project.
+
+We first have a class called FinBertSentimentAnalyzer and initalize it by loading the FinBERT model and tokenizer and setting up the device by checking if the GPU or CPU is available by using:
+```python 
+self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+```
+
+We also define a label list of ['negative', 'positive', 'neutral'] to interpert the outputs
+
+Then we assign a sentiment score for a given text using FinBERT
+- Take the text, thats reduced to 10k characters if needed, and convert it to model inputs using the tokenizer
+- Then we generate a confidence score and a sentiment_score then scale the score by 5 to make it easier to interperet:
+
+```python
+        neg_prob, neu_prob, pos_prob = probs
+        confidence = float(max(probs) - 0.33)
+        sentiment_score = float(pos_prob - neg_prob)
+        scaled_score = sentiment_score * 5
+```
+
+We then also score the following based on relevent key words, like specific geopolicital risk, using get_aspect_sentiment()
+
+Then get a simple scoring based on positive and negative keywords using get_lexicon_score()
+
+There are a few functions that also check for risk, and boost scoring by 5% if our classification includes 'macro' and if the confidence exceeds 0.7
+
+We then compute the general score in compute_sentiment() by calling all the various funcitons mentioned above and adjusting the weighting of the scores based on our rules found in calculate_dynamic_weights(). Our scoring is then called by the get_filtered_news() function, which then is used for our API calls. 
+
