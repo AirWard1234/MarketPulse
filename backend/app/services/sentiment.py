@@ -155,7 +155,6 @@ class FinBertSentimentAnalyzer:
         return list(set(aspect_keywords))
 
     def apply_classification_adjustments(self, score: float, classification: Dict, confidence: float) -> float:
-        """Optional: apply final adjustments (placeholder, can be expanded)"""
         # Example: boost score if macro and high confidence
         if classification.get('macro') and confidence > 0.7:
             score *= 1.05
@@ -222,9 +221,7 @@ class FinBertSentimentAnalyzer:
         }
 
 
-# -----------------------------
 # Singleton instance for FastAPI usage
-# -----------------------------
 _analyzer_instance = None
 
 def get_sentiment_analyzer() -> FinBertSentimentAnalyzer:
