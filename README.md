@@ -66,5 +66,29 @@ def extract_headline_summary(news_list: List[Dict]) -> List[Dict]:
         if "headline" in article and "summary" in article
     ]
 ```
-STOPWORDS is just a listof Str, with the filler words and classify_article() is just a function from backend/app/services/classifier.py that looks if a specific word is found in the news article that could tie it to a specific classification. For example, if the word "oil" is found, it would set the classification to "commodities."
-Note that these classifications are within large distinct listof Str. I have a list for: **TECH_COMPANIES, SEMICONDUCTOR_COMPANIES, FINANCE_COMPANIES, ENERGY_COMPANIES, DEFENSE_COMPANIES, COMMODITIES, MACRO_ENTITIES, MONETARY_POLICY, ECONOMIC_INDICATORS, GEOPOLITICAL_ENTITIES, GEOPOLITICAL_RISK, SUPPLY_SHOCK_TERMS, SAFE_HAVENS**
+**STOPWORDS** is just a listof Str, with the filler words and classify_article() is just a function from backend/app/services/classifier.py that looks if a specific word is found in the news article that could tie it to a specific classification. 
+
+For example, if the word "oil" is found, it would set the classification to "commodities."
+Note that these classifications are within large distinct listof Str. I have a list for: 
+1. TECH_COMPANIES,
+2. SEMICONDUCTOR_COMPANIES,
+3. FINANCE_COMPANIES,
+4. ENERGY_COMPANIES,
+5. DEFENSE_COMPANIES,
+6. COMMODITIES,
+7. MACRO_ENTITIES,
+8. MONETARY_POLICY,
+9. ECONOMIC_INDICATORS,
+10. GEOPOLITICAL_ENTITIES,
+11. GEOPOLITICAL_RISK,
+12. SUPPLY_SHOCK_TERMS,
+13. SAFE_HAVENS
+
+- We then take this information and pass it onto varias functions in backend/app/services/sentiment.py
+- Without going into too much detail, as this part of the code was well over 200 lines, I will explain the general structure of this code in the **Sentiment.py** section
+- Finally, the the scoring gets combined into our get_filtered_news() with the addition of sentiment_score = float(compute_enhanced_sentiment(text, classification)).
+- Now the function is constantly called in frontend/frontend/src/components/dashboard/api.tsx and used to display data.
+
+
+### Sentiment.py
+This file is by far the most important and complex part of the project.
